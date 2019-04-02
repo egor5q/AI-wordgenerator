@@ -114,6 +114,8 @@ def addword(m):
                 except:
                     nextword='&end'
                     end=True
+                    if currentword[len(currentword)-1] not endsymbols:
+                        currentword+='.'
                 if nextword=='&end' and end==False:
                     nextword='end'
                 if currentword[len(currentword)-1] in endsymbols:
