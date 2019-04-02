@@ -60,6 +60,11 @@ def story(m):
                         i=0
                         cwd=''
                         currentword=start
+                        try:
+                            while currentword[len(currentword)-1]=='.':
+                                currentword=currentword[:len(currentword)-1]
+                        except Exception as e:
+                            bot.send_message(441399484, traceback.format_exc())
                         st=0
                         for a in start:
                             if i==0 and a.isupper()==False and st==0:
