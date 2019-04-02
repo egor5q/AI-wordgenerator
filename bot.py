@@ -51,9 +51,9 @@ def addword(m):
                 toupdate.update({currentword:{nextword:1}})
             else:
                 if nextword not in toupdate[currentword]:
-                    toupdate[currentword][nextword]+=1
-                else:
                     toupdate[currentword].update({nextword:1})
+                else:
+                    toupdate[currentword][nextword]+=1
             i+=1
             
         for ids in toupdate:
