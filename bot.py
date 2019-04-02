@@ -18,7 +18,7 @@ client=MongoClient(os.environ['database'])
 db=client.aiwordgen
 words=db.words
 
-endsymbols=['!', '.']
+endsymbols=['!', '.', '?']
 
 try:
     pass
