@@ -79,7 +79,6 @@ def story(m):
                     else:
                         nextwords=[]
                         for ids in allwords['words'][currentword]:
-                            print(allwords['words'][currentword])
                             i=0
                             try:
                                 while i<allwords['words'][currentword][ids]:
@@ -93,6 +92,11 @@ def story(m):
                         else:
                             endsent=0
                         currentword=nextword
+                        try:
+                            while currentword[len(currentword)-1]=='.':
+                                currentword=currentword[:len(currentword)-1]
+                        except Exception as e:
+                            bot.send_message(441399484, traceback.format_exc())
                         if nextword!='&end':
                             i=0
                             cwd=''
