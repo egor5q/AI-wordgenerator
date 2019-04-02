@@ -81,12 +81,12 @@ def story(m):
                         nextwords=[]
                         for ids in allwords['words'][currentword]:
                             i=0
-                            try:
-                                while i<allwords['words'][currentword][ids]:
+                           
+                             
+                            while i<allwords['words'][currentword][ids]:
                                     nextwords.append(ids)
                                     i+=1
-                            except:
-                                pass
+                            
                         nextword=random.choice(nextwords)
                         if currentword[len(currentword)-1] in endsymbols:
                             endsent=1
