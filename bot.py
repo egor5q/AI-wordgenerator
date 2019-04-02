@@ -98,46 +98,47 @@ def story(m):
 def addword(m):
     if m.from_user.id!=m.chat.id:
         try:
-            toupdate={}
-            allword=words.find_one({})
-            textwords=m.text.split(' ')
-            i=0
-            for ids in textwords:
-                currentword=ids
-                if currentword=='&start':
-                    currentword='start'
-                if i==0:
-                    toupdate.update({'&start':{ids:1}})
-                end=False
-                try:
-                    nextword=textwords[i+1]
-                except:
-                    nextword='&end'
-                    end=True
-                    if currentword[len(currentword)-1] not in endsymbols:
-                        currentword+='.'
-                if nextword=='&end' and end==False:
-                    nextword='end'
-                if currentword[len(currentword)-1] in endsymbols:
-                    nextword='&end'
-                if currentword not in toupdate:     
-                    toupdate.update({currentword:{nextword:1}})
-                else:
-                    if nextword not in toupdate[currentword]:
-                        toupdate[currentword].update({nextword:1})
+            if m.text[0]!='/':
+                toupdate={}
+                allword=words.find_one({})
+                textwords=m.text.split(' ')
+                i=0
+                for ids in textwords:
+                    currentword=ids
+                    if currentword=='&start':
+                        currentword='start'
+                    if i==0:
+                        toupdate.update({'&start':{ids:1}})
+                    end=False
+                    try:
+                        nextword=textwords[i+1]
+                    except:
+                        nextword='&end'
+                        end=True
+                        if currentword[len(currentword)-1] not in endsymbols:
+                            currentword+='.'
+                    if nextword=='&end' and end==False:
+                        nextword='end'
+                    if currentword[len(currentword)-1] in endsymbols:
+                        nextword='&end'
+                    if currentword not in toupdate:     
+                        toupdate.update({currentword:{nextword:1}})
                     else:
-                        toupdate[currentword][nextword]+=1
-                i+=1
-                
-            for ids in toupdate:
-                if ids not in allword['words']:
-                    words.update_one({},{'$set':{'words.'+str(ids):toupdate[ids]}})
-                else:
-                    for idss in toupdate[ids]:
-                        if idss not in allword['words'][ids]:
-                            words.update_one({},{'$set':{'words.'+str(ids)+'.'+str(idss):toupdate[ids][idss]}})
+                        if nextword not in toupdate[currentword]:
+                            toupdate[currentword].update({nextword:1})
                         else:
-                            words.update_one({},{'$inc':{'words.'+str(ids)+'.'+str(idss):toupdate[ids][idss]}})
+                            toupdate[currentword][nextword]+=1
+                    i+=1
+                    
+                for ids in toupdate:
+                    if ids not in allword['words']:
+                        words.update_one({},{'$set':{'words.'+str(ids):toupdate[ids]}})
+                    else:
+                        for idss in toupdate[ids]:
+                            if idss not in allword['words'][ids]:
+                                words.update_one({},{'$set':{'words.'+str(ids)+'.'+str(idss):toupdate[ids][idss]}})
+                            else:
+                                words.update_one({},{'$inc':{'words.'+str(ids)+'.'+str(idss):toupdate[ids][idss]}})
         except Exception as e:
             bot.send_message(441399484, traceback.format_exc())
             
