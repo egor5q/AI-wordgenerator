@@ -112,6 +112,7 @@ def addword(m):
                 textwords=m.text.split(' ')
                 i=0
                 for ids in textwords:
+                  if ids not in endsymbols:
                     currentword=ids
                     if currentword=='&start':
                         currentword='start'
@@ -130,10 +131,13 @@ def addword(m):
                             pass
                     if nextword=='&end' and end==False:
                         nextword='end'
-                    if currentword[len(currentword)-1] in endsymbols:
-                        nextword='&end'
-                        if currentword[len(currentword)-1] == '.':
-                            currentword=currentword[:len(currentword)-1]
+                    try:
+                        if currentword[len(currentword)-1] in endsymbols:
+                            nextword='&end'
+                            if currentword[len(currentword)-1] == '.':
+                                currentword=currentword[:len(currentword)-1]
+                    except:
+                        pass
                     if currentword not in toupdate:     
                         toupdate.update({currentword:{nextword:1}})
                     else:
