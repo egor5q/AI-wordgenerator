@@ -30,7 +30,7 @@ except Exception as e:
  
 @bot.message_handler(commands=['story'])
 def story(m):
-    if m.from_user.id==441399484 or m.from_user.id==197216910:
+    if True:
         try:
             sentences=random.randint(1,3)
             try:
