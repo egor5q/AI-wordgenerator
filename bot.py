@@ -27,12 +27,7 @@ except Exception as e:
     print('Ошибка:\n', traceback.format_exc())
     bot.send_message(441399484, traceback.format_exc())
 
-@bot.message_handler(commands=['clear'])
-def clear(m):
-    words.remove({})
-    words.insert_one({'words':{}})
-    bot.send_message(441399484, 'yes')
- 
+
 @bot.message_handler(commands=['story'])
 def story(m):
     if True:
