@@ -33,14 +33,14 @@ def dsdgfgbdf(m):
         x=words.find_one({})
         for ids in x['words']:
             for idss in x['words'][ids]:
-                if '.' in idss :
-                    words.update_one({},{'$unset':{'words.'+str(ids)+'.'+str(idss)}})
-                    print('idss ниже')
-                    print(idss)
-            if '.' in ids:
-                words.update_one({},{'$unset':{'words.'+str(ids)}})
-                print('ids ниже')
-                print(ids)
+                if '.' in ids or '.' in idss:
+                    print('. in s')
+                    try:
+                        words.update_one({},{'$unset':{'words.'+str(ids)}})
+                        print('ids ниже')
+                        print(ids)
+                    except:
+                        pass
         bot.send_message(441399484, 'yes')
     
  
