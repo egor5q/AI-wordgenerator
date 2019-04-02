@@ -115,12 +115,14 @@ def addword(m):
                     except:
                         nextword='&end'
                         end=True
-                        if currentword[len(currentword)-1] not in endsymbols:
-                            currentword+='.'
+                        if currentword[len(currentword)-1] == '.':
+                            currentword=currentword[:len(currentword)-1]
                     if nextword=='&end' and end==False:
                         nextword='end'
                     if currentword[len(currentword)-1] in endsymbols:
                         nextword='&end'
+                        if currentword[len(currentword)-1] == '.':
+                            currentword=currentword[:len(currentword)-1]
                     if currentword not in toupdate:     
                         toupdate.update({currentword:{nextword:1}})
                     else:
