@@ -36,7 +36,7 @@ def dsdgfgbdf(m):
                 if '.' in ids or '.' in idss:
                     print('. in s')
                     try:
-                        words.update_one({},{'$unset':{'words.'+str(ids)}})
+                        words.update_one({},{'$unset':{'words.'+str(ids), 1}})
                         print('ids ниже')
                         print(ids)
                     except:
