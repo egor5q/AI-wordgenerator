@@ -64,9 +64,9 @@ def story(m):
                         ctext+=start+' '
                     else:
                         nextwords=[]
-                        for ids in allwords[currentword]:
+                        for ids in allwords['words'][currentword]:
                             i=0
-                            while i<allwords[currentword][ids]:
+                            while i<allwords['words'][currentword][ids]:
                                 nextwords.append(ids)
                         nextword=random.choice(nextwords)
                         if currentword[len(currentword)-1] in endsymbols:
