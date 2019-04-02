@@ -121,7 +121,10 @@ def addword(m):
                     if currentword=='&start':
                         currentword='start'
                     if i==0:
-                        toupdate.update({'&start':{ids:1}})
+                        fixids=ids
+                        while fixids[len(fixids)-1]==".":
+                            fixids=fixids[:len(fixids)-1]
+                        toupdate.update({'&start':{fixids:1}})
                     end=False
                     try:
                         nextword=textwords[i+1]
@@ -129,7 +132,7 @@ def addword(m):
                         nextword='&end'
                         end=True
                         try:
-                            if currentword[len(currentword)-1] == '.':
+                            while currentword[len(currentword)-1] == '.':
                                 currentword=currentword[:len(currentword)-1]
                         except:
                             pass
