@@ -27,7 +27,11 @@ except Exception as e:
     print('Ошибка:\n', traceback.format_exc())
     bot.send_message(441399484, traceback.format_exc())
 
-    
+@bot.message_handler(commands=['clear'])
+def clear(m):
+    words.remove({})
+    words.insert_one({'words':{}})
+    bot.send_message(441399484, 'yes')
  
 @bot.message_handler(commands=['story'])
 def story(m):
@@ -137,7 +141,8 @@ def addword(m):
                         fixids=ids
                         while fixids[len(fixids)-1]==".":
                             fixids=fixids[:len(fixids)-1]
-                        toupdate.update({'&start':{fixids:1}})
+                        if "." not in fixids:
+                            toupdate.update({'&start':{fixids:1}})
                     end=False
                     try:
                         nextword=textwords[i+1]
@@ -159,11 +164,14 @@ def addword(m):
                     while nextword[len(nextword)-1]==".":
                         nextword=nextword[:len(nextword)-1]
                     if currentword not in toupdate:     
-                        toupdate.update({currentword:{nextword:1}})
+                        if "." not in currentword and "." not in nextword:
+                            toupdate.update({currentword:{nextword:1}})
                     else:
                         if nextword not in toupdate[currentword]:
-                            toupdate[currentword].update({nextword:1})
+                            if "." not in currentword and "." not in nextword:
+                                toupdate[currentword].update({nextword:1})
                         else:
+                            
                             toupdate[currentword][nextword]+=1
                     i+=1
                 
