@@ -71,6 +71,7 @@ def story(m):
                     else:
                         nextwords=[]
                         for ids in allwords['words'][currentword]:
+                            print(allwords['words'][currentword])
                             i=0
                             while i<allwords['words'][currentword][ids]:
                                 nextwords.append(ids)
