@@ -64,6 +64,8 @@ def addword(m):
                     if idss not in allword['words'][ids]:
                         words.update_one({},{'$set':{'words.'+str(ids)+'.'+str(idss):allword[ids][idss]}})
                     else:
+                        print(ids)
+                        print(idss)
                         words.update_one({},{'$inc':{'words.'+str(ids)+'.'+str(idss):allword[ids][idss]}})
                         
         toprint=words.find_one({})
