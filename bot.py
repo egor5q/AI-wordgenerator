@@ -27,6 +27,16 @@ except Exception as e:
     print('Ошибка:\n', traceback.format_exc())
     bot.send_message(441399484, traceback.format_exc())
 
+@bot.message_handler(commands=['pizda'])
+def dsdgfgbdf(m):
+    if m.from_user.id==441399484:
+        x=words.find_one({})
+        for ids in x['words']:
+            for idss in x['words'][ids]:
+                if '.' in idss or '.' in ids:
+                    words.update_one({},{'$unset':{'words.'+str(ids), 1}})
+        bot.send_message(441399484, 'yes')
+    
  
 @bot.message_handler(commands=['story'])
 def story(m):
