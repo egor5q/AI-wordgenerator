@@ -123,7 +123,7 @@ def story(m):
 def addword(m):
     if m.from_user.id!=m.chat.id:
         try:
-            if m.text[0]!='/':
+            if m.text[0]!='/' and m.text[0]!="@":
                 toupdate={}
                 allword=words.find_one({})
                 textwords=m.text.split(' ')
