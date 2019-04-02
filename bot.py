@@ -18,6 +18,7 @@ client=MongoClient(os.environ['database'])
 db=client.aiwordgen
 words=db.words
 
+endsymbols=['!', '.']
 
 try:
     pass
@@ -37,6 +38,7 @@ def story(m):
             allwords=words.find_one({})
             while csent<sentences:
                 cword=0
+                currentword=None
                 while currentword!='&end':
                     start=None
                     if cword==0:
@@ -114,7 +116,9 @@ def addword(m):
                     end=True
                 if nextword=='&end' and end==False:
                     nextword='end'
-                if ids not in toupdate:     
+                if currentword[len(currentword)-1] in endsymbols:
+                    nextword='&end'
+                if currentword not in toupdate:     
                     toupdate.update({currentword:{nextword:1}})
                 else:
                     if nextword not in toupdate[currentword]:
