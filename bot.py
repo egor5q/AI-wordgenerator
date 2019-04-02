@@ -154,8 +154,9 @@ def addword(m):
                         else:
                             toupdate[currentword][nextword]+=1
                     i+=1
-                    
+                
                 for ids in toupdate:
+                    
                     if ids not in allword['words']:
                         words.update_one({},{'$set':{'words.'+str(ids):toupdate[ids]}})
                     else:
