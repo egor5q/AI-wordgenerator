@@ -30,18 +30,8 @@ except Exception as e:
 @bot.message_handler(commands=['pizda'])
 def dsdgfgbdf(m):
     if m.from_user.id==441399484:
-        x=words.find_one({})
-        for ids in x['words']:
-            for idss in x['words'][ids]:
-                if '.' in ids or '.' in idss:
-                    print('. in s')
-                    try:
-                        words.update_one({},{'$unset':{'words.'+str(ids), 1}})
-                        print('ids ниже')
-                        print(ids)
-                    except:
-                        pass
-        bot.send_message(441399484, 'yes')
+        words.remove({})
+        print('yes')
     
  
 @bot.message_handler(commands=['story'])
@@ -193,7 +183,8 @@ def addword(m):
                                 if isinstance(toupdate[ids][idss], int):
                                     words.update_one({},{'$set':{'words.'+str(ids)+'.'+str(idss):toupdate[ids][idss]}})
                             else:
-                                words.update_one({},{'$inc':{'words.'+str(ids)+'.'+str(idss):toupdate[ids][idss]}})
+                                if isinstance(toupdate[ids][idss], int):
+                                    words.update_one({},{'$inc':{'words.'+str(ids)+'.'+str(idss):toupdate[ids][idss]}})
         except Exception as e:
             bot.send_message(441399484, traceback.format_exc())
             
