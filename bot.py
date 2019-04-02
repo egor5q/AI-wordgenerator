@@ -131,19 +131,16 @@ def addword(m):
                     except:
                         nextword='&end'
                         end=True
-                        try:
-                            while currentword[len(currentword)-1] == '.':
-                                currentword=currentword[:len(currentword)-1]
-                        except:
-                            pass
+                    try:
+                        while currentword[len(currentword)-1] == '.':
+                            currentword=currentword[:len(currentword)-1]
+                    except:
+                        pass
                     if nextword=='&end' and end==False:
                         nextword='end'
                     try:
                         if currentword[len(currentword)-1] in endsymbols:
                             nextword='&end'
-                            while currentword[len(currentword)-1] == '.':
-                                 
-                                currentword=currentword[:len(currentword)-1]
                     except:
                         pass
                     if currentword not in toupdate:     
@@ -156,13 +153,15 @@ def addword(m):
                     i+=1
                 
                 for ids in toupdate:
-                    
                     if ids not in allword['words']:
-                        words.update_one({},{'$set':{'words.'+str(ids):toupdate[ids]}})
+                        for idss in toupdate[ids]:
+                            if isinstance(toupdate[ids][idss], int):
+                                words.update_one({},{'$set':{'words.'+str(ids)+'.'+str(idss):toupdate[ids][idss]}})
                     else:
                         for idss in toupdate[ids]:
                             if idss not in allword['words'][ids]:
-                                words.update_one({},{'$set':{'words.'+str(ids)+'.'+str(idss):toupdate[ids][idss]}})
+                                if isinstance(toupdate[ids][idss], int):
+                                    words.update_one({},{'$set':{'words.'+str(ids)+'.'+str(idss):toupdate[ids][idss]}})
                             else:
                                 words.update_one({},{'$inc':{'words.'+str(ids)+'.'+str(idss):toupdate[ids][idss]}})
         except Exception as e:
