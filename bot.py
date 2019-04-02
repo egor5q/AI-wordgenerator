@@ -53,13 +53,15 @@ def story(m):
                         i=0
                         cwd=''
                         currentword=start
+                        st=0
                         for a in start:
-                            if i==0 and a.isupper()==False:
+                            if i==0 and a.isupper()==False and st==0:
                                 if a!='@':
                                     cwd+=a.upper()
                             else:
                                 if a!='@':
                                     cwd+=a
+                            st+=1
                         start=cwd
                         ctext+=start+' '
                     else:
@@ -84,6 +86,7 @@ def story(m):
                             ctext+=cwd+' '
                         else:
                             if endsent==0:
+                                ctext=ctext[:len(ctext)-1]
                                 ctext+='.'
                         
                     cword+=1
