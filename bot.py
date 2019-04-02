@@ -50,9 +50,12 @@ def story(m):
                         items=[]
                         for ids in start:
                             i=0
-                            while i<start[ids]: 
-                                items.append(ids)
-                                i+=1
+                            try:
+                                while i<start[ids]: 
+                                    items.append(ids)
+                                    i+=1
+                            except:
+                                pass
                         start=random.choice(items)
                         i=0
                         cwd=''
@@ -131,18 +134,20 @@ def addword(m):
                     except:
                         nextword='&end'
                         end=True
-                    try:
-                        while currentword[len(currentword)-1] == '.':
-                            currentword=currentword[:len(currentword)-1]
-                    except:
-                        pass
                     if nextword=='&end' and end==False:
                         nextword='end'
                     try:
                         if currentword[len(currentword)-1] in endsymbols:
                             nextword='&end'
-                    except:
-                        pass
+                    except Exception as e:
+                        bot.send_message(441399484, traceback.format_exc())
+                    try:
+                        while currentword[len(currentword)-1] == '.':
+                            currentword=currentword[:len(currentword)-1]
+                    except Exception as e:
+                        bot.send_message(441399484, traceback.format_exc())
+                    while nextword[len(nextword)-1]==".":
+                        nextword=nextword[:len(nextword)-1]
                     if currentword not in toupdate:     
                         toupdate.update({currentword:{nextword:1}})
                     else:
