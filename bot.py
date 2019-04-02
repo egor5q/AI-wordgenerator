@@ -27,11 +27,6 @@ except Exception as e:
     print('Ошибка:\n', traceback.format_exc())
     bot.send_message(441399484, traceback.format_exc())
 
-@bot.message_handler(commands=['pizda'])
-def dsdgfgbdf(m):
-    if m.from_user.id==441399484:
-        words.insert_one({'words':{})
-        print('yes')
     
  
 @bot.message_handler(commands=['story'])
