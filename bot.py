@@ -134,7 +134,8 @@ def addword(m):
                     try:
                         if currentword[len(currentword)-1] in endsymbols:
                             nextword='&end'
-                            if currentword[len(currentword)-1] == '.':
+                            while currentword[len(currentword)-1] == '.':
+                                 
                                 currentword=currentword[:len(currentword)-1]
                     except:
                         pass
