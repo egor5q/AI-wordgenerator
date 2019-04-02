@@ -30,7 +30,7 @@ except Exception as e:
 @bot.message_handler(commands=['pizda'])
 def dsdgfgbdf(m):
     if m.from_user.id==441399484:
-        words.remove({})
+        words.insert_one({'words':{})
         print('yes')
     
  
