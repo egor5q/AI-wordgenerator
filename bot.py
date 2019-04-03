@@ -157,9 +157,9 @@ def addword(m):
                         nextword=textwords[i+1]
                         if twowords==1:
                             try:
-                                nextword=textwords[i+1]+' '+textwords[i+2]
+                                nextword=textwords[i+2]+' '+textwords[i+3]
                             except:
-                                nextword=textwords[i+1]+' '+'&end'
+                                nextword=textwords[i+2]+' '+'&end'
                                 end=True
                     except:
                         nextword='&end'
