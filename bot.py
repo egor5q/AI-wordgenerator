@@ -206,9 +206,7 @@ def addword(m):
                             else:
                                 if isinstance(toupdate[ids][idss], int):
                                     words.update_one({},{'$inc':{dic+str(ids)+'.'+str(idss):toupdate[ids][idss]}})
-                                    
-            for
-                                    
+                     
         except Exception as e:
             bot.send_message(441399484, traceback.format_exc())
             
