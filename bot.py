@@ -201,10 +201,6 @@ def addword(m):
                     if ids not in allword[dic]: ####
                         for idss in toupdate[ids]:
                             if isinstance(toupdate[ids][idss], int):
-                                if twowords==1:
-                                    dic='words2.'
-                                else:
-                                    dic='words.'
                                 words.update_one({},{'$set':{dic+'.'+str(ids)+'.'+str(idss):toupdate[ids][idss]}})
                     else:
                         for idss in toupdate[ids]:
