@@ -17,7 +17,7 @@ bot = telebot.TeleBot(token)
 client=MongoClient(os.environ['database'])
 db=client.aiwordgen
 words=db.words
-twowords=1
+twowords=0
 
 endsymbols=['!', '.', '?', ')']
 
