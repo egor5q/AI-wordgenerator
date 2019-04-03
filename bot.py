@@ -114,7 +114,10 @@ def story(m):
                             ctext+=cwd+' '
                         else:
                             if endsent==0:
-                                ctext=ctext[:len(ctext)-1]
+                                if twowords==1:
+                                    ctext=ctext[:len(ctext)-5]
+                                else: 
+                                    ctext=ctext[:len(ctext)-1]
                                 ctext+='.'
                         
                     cword+=1
