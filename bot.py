@@ -18,7 +18,7 @@ client=MongoClient(os.environ['database'])
 db=client.aiwordgen
 words=db.words
 
-endsymbols=['!', '.', '?']
+endsymbols=['!', '.', '?', ')']
 
 try:
     pass
@@ -60,11 +60,7 @@ def story(m):
                         i=0
                         cwd=''
                         currentword=start
-                        try:
-                            while currentword[len(currentword)-1]=='.':
-                                currentword=currentword[:len(currentword)-1]
-                        except Exception as e:
-                            bot.send_message(441399484, traceback.format_exc())
+                        
                         st=0
                         for a in start:
                             if i==0 and a.isupper()==False and st==0:
@@ -92,11 +88,7 @@ def story(m):
                         else:
                             endsent=0
                         currentword=nextword
-                        try:
-                            while currentword[len(currentword)-1]=='.':
-                                currentword=currentword[:len(currentword)-1]
-                        except Exception as e:
-                            bot.send_message(441399484, traceback.format_exc())
+                        
                         if nextword!='&end':
                             i=0
                             cwd=''
