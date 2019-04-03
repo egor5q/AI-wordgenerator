@@ -195,7 +195,7 @@ def addword(m):
                 else:
                     dic='words.'
                 for ids in toupdate:
-                    if ids not in allword['words']: ####
+                    if ids not in allword[dic]: ####
                         for idss in toupdate[ids]:
                             if isinstance(toupdate[ids][idss], int):
                                 if twowords==1:
