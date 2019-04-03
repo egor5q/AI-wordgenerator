@@ -194,9 +194,9 @@ def addword(m):
                     i+=1
                 
                 if twowords==1:
-                    dic='words2.'
+                    dic='words2'
                 else:
-                    dic='words.'
+                    dic='words'
                 for ids in toupdate:
                     if ids not in allword[dic]: ####
                         for idss in toupdate[ids]:
@@ -205,15 +205,15 @@ def addword(m):
                                     dic='words2.'
                                 else:
                                     dic='words.'
-                                words.update_one({},{'$set':{dic+str(ids)+'.'+str(idss):toupdate[ids][idss]}})
+                                words.update_one({},{'$set':{dic+'.'+str(ids)+'.'+str(idss):toupdate[ids][idss]}})
                     else:
                         for idss in toupdate[ids]:
                             if idss not in allword['words'][ids]:
                                 if isinstance(toupdate[ids][idss], int):
-                                    words.update_one({},{'$set':{dic+str(ids)+'.'+str(idss):toupdate[ids][idss]}})
+                                    words.update_one({},{'$set':{dic+'.'+str(ids)+'.'+str(idss):toupdate[ids][idss]}})
                             else:
                                 if isinstance(toupdate[ids][idss], int):
-                                    words.update_one({},{'$inc':{dic+str(ids)+'.'+str(idss):toupdate[ids][idss]}})
+                                    words.update_one({},{'$inc':{dic+'.'+str(ids)+'.'+str(idss):toupdate[ids][idss]}})
                      
         except Exception as e:
             bot.send_message(441399484, traceback.format_exc())
