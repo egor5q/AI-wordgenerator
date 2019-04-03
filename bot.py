@@ -17,6 +17,7 @@ bot = telebot.TeleBot(token)
 client=MongoClient(os.environ['database'])
 db=client.aiwordgen
 words=db.words
+twowords=1
 
 endsymbols=['!', '.', '?', ')']
 
@@ -27,7 +28,12 @@ except Exception as e:
     print('Ошибка:\n', traceback.format_exc())
     bot.send_message(441399484, traceback.format_exc())
 
-
+@bot.message_handler(commands=['adddict'])
+def adddict(m):
+    if m.from_user.id==441399484:
+        words.update_one({},{'$set':{'words2':{}}})
+        bot.send_message(441399484, 'yes')
+    
 @bot.message_handler(commands=['story'])
 def story(m):
     if True:
@@ -40,13 +46,18 @@ def story(m):
             csent=0
             ctext=''
             allwords=words.find_one({})
+            global twowords
+            if twowords==1:
+                dic='words2'
+            else:
+                dic='words2'
             while csent<sentences:
                 cword=0
                 currentword=None
                 while currentword!='&end':
                     start=None
                     if cword==0:
-                        start=allwords['words']['&start']
+                        start=allwords[dic]['&start']
                         items=[]
                         for ids in start:
                             i=0
@@ -74,11 +85,11 @@ def story(m):
                         ctext+=start+' '
                     else:
                         nextwords=[]
-                        for ids in allwords['words'][currentword]:
+                        for ids in allwords[dic][currentword]:
                             i=0
                            
                              
-                            while i<allwords['words'][currentword][ids]:
+                            while i<allwords[dic][currentword][ids]:
                                     nextwords.append(ids)
                                     i+=1
                             
@@ -112,6 +123,7 @@ def story(m):
 
 @bot.message_handler()
 def addword(m):
+    global twowords
     if m.from_user.id!=m.chat.id:
         try:
             if m.text[0]!='/' and m.text[0]!="@":
@@ -122,10 +134,12 @@ def addword(m):
                 for ids in textwords:
                   if ids not in endsymbols:
                     currentword=ids
+                    if twowords==1:
+                        currentword=ids+' '+textwords[i+1]
                     if currentword=='&start':
                         currentword='start'
                     if i==0:
-                        fixids=ids
+                        fixids=currentword
                         while fixids[len(fixids)-1]==".":
                             fixids=fixids[:len(fixids)-1]
                         if "." not in fixids:
@@ -133,10 +147,16 @@ def addword(m):
                     end=False
                     try:
                         nextword=textwords[i+1]
+                        if twowords==1:
+                            try:
+                                nextword=textwords[i+1]+' '+textwords[i+2]
+                            except:
+                                nextword=textwords[i+1]+' '+'&end'
+                                end=True
                     except:
                         nextword='&end'
                         end=True
-                    if nextword=='&end' and end==False:
+                    if '&end' in nextword and end==False:
                         nextword='end'
                     try:
                         if currentword[len(currentword)-1] in endsymbols:
@@ -148,8 +168,11 @@ def addword(m):
                             currentword=currentword[:len(currentword)-1]
                     except Exception as e:
                         bot.send_message(441399484, traceback.format_exc())
-                    while nextword[len(nextword)-1]==".":
-                        nextword=nextword[:len(nextword)-1]
+                    try:
+                        while nextword[len(nextword)-1]==".":
+                            nextword=nextword[:len(nextword)-1]
+                    except Exception as e:
+                        bot.send_message(441399484, traceback.format_exc())
                     if currentword not in toupdate:     
                         if "." not in currentword and "." not in nextword:
                             toupdate.update({currentword:{nextword:1}})
@@ -162,19 +185,30 @@ def addword(m):
                             toupdate[currentword][nextword]+=1
                     i+=1
                 
+                if twowords==1:
+                    dic='words2.'
+                else:
+                    dic='words.'
                 for ids in toupdate:
-                    if ids not in allword['words']:
+                    if ids not in allword['words']: ####
                         for idss in toupdate[ids]:
                             if isinstance(toupdate[ids][idss], int):
-                                words.update_one({},{'$set':{'words.'+str(ids)+'.'+str(idss):toupdate[ids][idss]}})
+                                if twowords==1:
+                                    dic='words2.'
+                                else:
+                                    dic='words.'
+                                words.update_one({},{'$set':{dic+str(ids)+'.'+str(idss):toupdate[ids][idss]}})
                     else:
                         for idss in toupdate[ids]:
                             if idss not in allword['words'][ids]:
                                 if isinstance(toupdate[ids][idss], int):
-                                    words.update_one({},{'$set':{'words.'+str(ids)+'.'+str(idss):toupdate[ids][idss]}})
+                                    words.update_one({},{'$set':{dic+str(ids)+'.'+str(idss):toupdate[ids][idss]}})
                             else:
                                 if isinstance(toupdate[ids][idss], int):
-                                    words.update_one({},{'$inc':{'words.'+str(ids)+'.'+str(idss):toupdate[ids][idss]}})
+                                    words.update_one({},{'$inc':{dic+str(ids)+'.'+str(idss):toupdate[ids][idss]}})
+                                    
+            for
+                                    
         except Exception as e:
             bot.send_message(441399484, traceback.format_exc())
             
