@@ -57,7 +57,12 @@ def story(m):
                 while currentword!='&end':
                     start=None
                     if cword==0:
-                        start=allwords[dic]['&start']
+                        if twowords==0:
+                            start=allwords[dic]['&start']
+                        else:
+                            for idss in allwords[dic]:
+                                if '&start' in idss:
+                                    start=allwords[dic][idss]
                         items=[]
                         for ids in start:
                             i=0
