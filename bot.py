@@ -50,11 +50,11 @@ def story(m):
             if twowords==1:
                 dic='words2'
             else:
-                dic='words2'
+                dic='words'
             while csent<sentences:
                 cword=0
-                currentword=None
-                while currentword!='&end':
+                currentword=''
+                while '&end' not in currentword:
                     start=None
                     if cword==0:
                         if twowords==0:
@@ -105,7 +105,7 @@ def story(m):
                             endsent=0
                         currentword=nextword
                         
-                        if nextword!='&end':
+                        if '&end' not in nextword:
                             i=0
                             cwd=''
                             for a in nextword:
@@ -140,7 +140,10 @@ def addword(m):
                   if ids not in endsymbols:
                     currentword=ids
                     if twowords==1:
-                        currentword=ids+' '+textwords[i+1]
+                        try:
+                            currentword=ids+' '+textwords[i+1]
+                        except:
+                            currentword+=ids+' '+'&end'
                     if currentword=='&start':
                         currentword='start'
                     if i==0:
