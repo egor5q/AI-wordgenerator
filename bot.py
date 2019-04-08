@@ -18,6 +18,7 @@ client=MongoClient(os.environ['database'])
 db=client.aiwordgen
 words=db.words
 twowords=0
+allw={}
 
 endsymbols=['!', '.', '?', ')']
 
@@ -45,7 +46,8 @@ def story(m):
                 pass
             csent=0
             ctext=''
-            allwords=words.find_one({})
+            global allw
+            allwords=allw
             global twowords
             if twowords==1:
                 dic='words2'
@@ -218,6 +220,12 @@ def addword(m):
             bot.send_message(441399484, traceback.format_exc())
             
         
+def reload():
+    t=threading.Timer(60, reload)
+    t.start()
+    global allw
+    allw=words.find_one({})
+    
     
     
 print('7777')
