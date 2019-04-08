@@ -226,8 +226,10 @@ def reload():
     global allw
     allw=words.find_one({})
     
-    
-    
+reload() 
+   
+
 print('7777')
+bot.send_message(441399484, 'launched')
 bot.polling(none_stop=True,timeout=600)
 
