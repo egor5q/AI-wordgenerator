@@ -221,7 +221,7 @@ def addword(m):
             
         
 def reload():
-    t=threading.Timer(60, reload)
+    t=threading.Timer(3600, reload)
     t.start()
     global allw
     allw=words.find_one({})
